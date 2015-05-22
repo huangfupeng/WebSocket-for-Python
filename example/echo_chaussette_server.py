@@ -22,7 +22,7 @@ class ws4pyServer(GeventServer):
         GeventServer.stop(self, *args, **kwargs)
 
 if __name__ == '__main__':
-    import os, socket_example, sys
+    import os, socket_example111, sys
     from ws4py import configure_logger
     logger = configure_logger()
 
@@ -32,7 +32,7 @@ if __name__ == '__main__':
     from chaussette.server import make_server
     server = make_server(app=WebSocketWSGIApplication(handler_cls=EchoWebSocket),
                          host='unix:///%s/ws.sock' % os.getcwd(),
-                         address_family=socket_example.AF_UNIX,
+                         address_family=socket_example111.AF_UNIX,
                          backend='ws4py',
                          logger=logger)
     try:
