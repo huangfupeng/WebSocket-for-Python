@@ -2,7 +2,7 @@
 from base64 import b64encode
 from hashlib import sha1
 import os
-import socket
+import socket_example
 import ssl
 
 from ws4py import WS_KEY, WS_VERSION
@@ -82,33 +82,33 @@ class WebSocketBaseClient(WebSocket):
         self._parse_url()
 
         if self.unix_socket_path:
-            sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM, 0)
+            sock = socket_example.socket_example(socket_example.AF_UNIX, socket_example.SOCK_STREAM, 0)
         else:
             # Let's handle IPv4 and IPv6 addresses
             # Simplified from CherryPy's code
             try:
-                family, socktype, proto, canonname, sa = socket.getaddrinfo(self.host, self.port,
-                                                                            socket.AF_UNSPEC,
-                                                                            socket.SOCK_STREAM,
-                                                                            0, socket.AI_PASSIVE)[0]
-            except socket.gaierror:
-                family = socket.AF_INET
+                family, socktype, proto, canonname, sa = socket_example.getaddrinfo(self.host, self.port,
+                                                                            socket_example.AF_UNSPEC,
+                                                                            socket_example.SOCK_STREAM,
+                                                                            0, socket_example.AI_PASSIVE)[0]
+            except socket_example.gaierror:
+                family = socket_example.AF_INET
                 if self.host.startswith('::'):
-                    family = socket.AF_INET6
+                    family = socket_example.AF_INET6
 
-                socktype = socket.SOCK_STREAM
+                socktype = socket_example.SOCK_STREAM
                 proto = 0
                 canonname = ""
                 sa = (self.host, self.port, 0, 0)
 
-            sock = socket.socket(family, socktype, proto)
-            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-            sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            if hasattr(socket, 'AF_INET6') and family == socket.AF_INET6 and \
+            sock = socket_example.socket_example(family, socktype, proto)
+            sock.setsockopt(socket_example.IPPROTO_TCP, socket_example.TCP_NODELAY, 1)
+            sock.setsockopt(socket_example.SOL_SOCKET, socket_example.SO_REUSEADDR, 1)
+            if hasattr(socket_example, 'AF_INET6') and family == socket_example.AF_INET6 and \
               self.host.startswith('::'):
                 try:
-                    sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_V6ONLY, 0)
-                except (AttributeError, socket.error):
+                    sock.setsockopt(socket_example.IPPROTO_IPV6, socket_example.IPV6_V6ONLY, 0)
+                except (AttributeError, socket_example.error):
                     pass
 
         WebSocket.__init__(self, sock, protocols=protocols,

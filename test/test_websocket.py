@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 import os
-import socket
+import socket_example
 import struct
 
 from mock import MagicMock, call, patch
@@ -40,7 +40,7 @@ class WSWebSocketTest(unittest.TestCase):
         m = MagicMock()
         ws = WebSocket(sock=m)
         ws.close_connection()
-        m.shutdown.assert_called_once_with(socket.SHUT_RDWR)
+        m.shutdown.assert_called_once_with(socket_example.SHUT_RDWR)
         m.close.assert_called_once_with()
         self.assertIsNone(ws.connection)
 
@@ -98,7 +98,7 @@ class WSWebSocketTest(unittest.TestCase):
 
     def test_socket_error_on_receiving_more_bytes(self):
         m = MagicMock()
-        m.recv = MagicMock(side_effect=socket.error)
+        m.recv = MagicMock(side_effect=socket_example.error)
         ws = WebSocket(sock=m)
         self.assertFalse(ws.once())
         

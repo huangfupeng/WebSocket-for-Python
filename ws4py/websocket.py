@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
-import socket
+import socket_example
 import time
 import threading
 import types
@@ -53,7 +53,7 @@ class Heartbeat(threading.Thread):
 
             try:
                 self.websocket.send(PongControlMessage(data='beep'))
-            except socket.error:
+            except socket_example.error:
                 logger.info("Heartbeat failed")
                 self.websocket.server_terminated = True
                 self.websocket.close_connection()
@@ -203,7 +203,7 @@ class WebSocket(object):
         """
         if self.sock:
             try:
-                self.sock.shutdown(socket.SHUT_RDWR)
+                self.sock.shutdown(socket_example.SHUT_RDWR)
                 self.sock.close()
             except:
                 pass
@@ -298,7 +298,7 @@ class WebSocket(object):
 
         try:
             b = self.sock.recv(self.reading_buffer_size)
-        except socket.error:
+        except socket_example.error:
             logger.exception("Failed to receive data")
             return False
         else:
